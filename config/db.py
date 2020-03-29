@@ -1,6 +1,8 @@
 import psycopg2
 from psycopg2 import pool
+import traceback
 import os
+import logging
 
 # Database connection
 def connect_db(app):
@@ -13,8 +15,9 @@ def connect_db(app):
             port = os.getenv("DATABASE_PORT"),
             database = os.getenv("DATABASE_NAME")
         )
-        print(os.getenv("DATABASE_USER"))
-    except: 
-        print("Error while establishing database connection")
+    except Exception:
+        logging.error(traceback.format_exc())
+        logging.error('Failed to set db connection pool for {0}')
+        print("Database connection error")
 
 
